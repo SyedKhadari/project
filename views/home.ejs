@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>home</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-app="mytest" ng-controller="homecontroller" ng-init="getdata()">
+	<h1>Welcome Home <%=user.username%> </h1>  
+	<button class="btn btn-danger"><a href="/logout" style="color:white">Logout</a></button>
+	<br>
+	<br>
+	<form class="row col-md-6">
+		<label class="col-md-4">Tasks:</label>
+		<div class="col-md-6">
+			<input type="text" placeholder="tasks" class="form-control" ng-model="user.task">
+		</div>
+		<button class="col-md-2 btn btn-info"  ng-click="posttask(user)">submit</button>
+	</form>	
+	<br>
+	<br>
+	<br>
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>S.NO</th>
+				<th>Task Name</th>
+				<th>Date</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat = "user in usertasks">
+				<td ng-bind="$index + 1"></td>
+				<td ng-bind="user.task"></td>
+				<td ng-bind="user.date"></td>
+				<td>
+					<button ng-if="user.status=='Pending'" class="btn btn-primary" ng-bind="user.status" ng-click="updatestatus(user)"></button>
+					<p ng-if="user.status=='Completed'" ng-bind="user.status"></p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+  </body>
+  <script src="javascripts/home2.js"></script>
+</html>

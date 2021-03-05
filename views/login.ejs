@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-app="mytest" ng-controller="logincontroller">
+  	<form>
+  		<label>email:</label>
+  		<input type="email" ng-model="user.email" placeholder="email">
+  		<br>
+  		<br>
+  		<label>password:</label>
+  		<input type="password" ng-model="user.password">
+  		<br>
+  		<button type="button" ng-click="postdata(user)">submit</button>
+      <a href="/forgot">forgot password</a>
+  	</form>
+  	<br>
+  	<br>
+  </body>
+  <script src="javascripts/login.js"></script>
+</html>

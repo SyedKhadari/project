@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body ng-app="mytest" ng-controller="indexcontroller" ng-init="getdata()">
+  	<form>
+  		<label>username:</label>
+  		<input type="text" ng-model="user.username" placeholder="username">
+  		<br>
+  		<br>
+  		<label>email:</label>
+  		<input type="email" ng-model="user.email" placeholder="email">
+  		<br>
+  		<br>
+  		<label>password:</label>
+  		<input type="password" ng-model="user.password">
+  		<br>
+  		<button type="button" ng-click="postdata(user)">submit</button>
+  	</form>
+  	<br>
+  	<br>
+  	<table class="table table-bordered table-striped">
+  		<thead>
+  			<tr>
+  				<th>S.NO</th>
+  				<th>username</th>
+  				<th>email</th>
+  				<th>password</th>
+  				<th>edit</th>
+  				<th>delete</th>
+  			</tr>
+  		</thead>
+  		<tbody>
+  			<tr ng-repeat="iuser in usersdata">
+  				<td ng-bind="$index + 1"></td>
+  				<td>
+  					<span ng-hide="update" ng-bind="iuser.username"></span>
+  					<input ng-show="update" type="text" ng-model="iuser.username">
+  				</td>
+  				<td>
+  					<span ng-hide="update" ng-bind="iuser.email"></span>
+  					<input ng-show="update" type="text" ng-model="iuser.email">
+  				</td>
+  				<td>
+  					<span ng-hide="update" ng-bind="iuser.password"></span>
+  					<input ng-show="update" type="text"  ng-model="iuser.password">
+  				</td>
+  				<td>
+  					<button ng-hide="update" class="btn btn-info" ng-click="update='true'">Edit</button>
+  					<button ng-show="update" ng-click="update=false;updatedata($index,iuser)" class="btn btn-primary">Update</button>
+  				</td>
+  				<td>
+  					<button class="btn btn-danger" ng-click="deletedata($index,iuser)">Delete</button>
+  				</td>
+  			</tr>
+  		</tbody>
+  	</table>
+  </body>
+  <script src="javascripts/home.js"></script>
+</html>

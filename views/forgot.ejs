@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Forgot Password</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  </head>
+  <body style="background-image: url(images/wallpaper.jpg);" ng-app="mytest" ng-controller="forgotcontroller">
+    <div class="container">
+      <div class="row">
+        <h3 style="text-align: center;"><u>Forgot Password</u></h3>
+        <div class="col-md-6 col-md-offset-3" style="border: 1px solid white;padding: 30px;border-radius: 10px">
+          <form>
+            <div class="col-md-12">
+              <label class="col-md-2" style="font-size: 20px">Email:</label>
+              <div class="col-md-8">
+                <input type="email" class="form-control" ng-model="user.email" placeholder="email">
+              </div>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="col-md-12" style="text-align: center;">
+              <button type="button" class="btn btn-info" ng-click="postdata(user)">submit</button>
+            </div>
+          </form>      
+        </div>  
+      </div>
+    </div>
+  	<br>
+  	<br>
+  </body>
+  <script src="javascripts/forgot.js"></script>
+</html>
