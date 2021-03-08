@@ -20,9 +20,22 @@
             </div>
             <br>
             <br>
+            <div ng-hide="showotp" class="col-md-12" style="text-align: center;">
+              <button type="button" class="btn btn-info" ng-click="postdata(user)">send OTP</button>
+            </div>
             <br>
-            <div class="col-md-12" style="text-align: center;">
-              <button type="button" class="btn btn-info" ng-click="postdata(user)">submit</button>
+            <br>
+            <div class="col-md-12" ng-show="showotp">
+              <label class="col-md-2" style="font-size: 20px;color: white">OTP:</label>
+              <div class="col-md-8">
+                <input type="text" class="form-control" ng-model="user.otp" placeholder="enter otp">
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12" style="text-align: center;" ng-show="showotp">
+              <button type="button" class="btn btn-info" ng-click="sendotp(user)">submit</button>
+              <button type="button" class="btn btn-warning" ng-click="postdata(user)">Resend OTP</button>
             </div>
           </form>      
         </div>  

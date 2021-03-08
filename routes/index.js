@@ -5,6 +5,8 @@ var db = monk('localhost:27017/Project');
 var collection = db.get("usersdata");
 var collection2 = db.get("usertasks")
 var moment = require('moment')
+var randomstring = require("randomstring");
+var nodemailer = require('nodemailer');
 
 var CronJob = require('cron').CronJob;
 
@@ -145,8 +147,48 @@ router.get('/forgot', function(req,res){
 
 
 router.post('/forgot', function(req,res){
-	console.log(req.body)
+	// console.log(req.body)
+var string = randomstring.generate({
+				  length: 5,
+				  charset: 'numeric'
+				});
+
 	collection.findOne({"email":req.body.email},function(err,docs){
+		if(err || (docs==null)){
+			res.sendStatus(500)
+		}
+		else{
+			collection.update({"email":docs.email},{$set:{"OTP":string}})
+			var transporter = nodemailer.createTransport({
+			  service: 'gmail',
+			  auth: {
+			    user: 'syedkhadariafrid@gmail.com',
+			    pass: '7794943053'
+			  }
+			});
+
+			var mailOptions = {
+			  from: 'syedkhadariafrid@gmail.com',
+			  to: 'syedkhadariafrid@gmail.com',
+			  subject: 'Sending OTP',
+			  text: 'Your OTP is '+string
+			};
+
+			transporter.sendMail(mailOptions, function(error, info){
+			  if (error) {
+			    console.log(error);
+			  } else {
+			    console.log('Email sent: ' + info.response);
+			  }
+			});
+			res.sendStatus(200)
+		}
+	})
+})
+
+
+router.post('/checkotp', function(req,res){
+	collection.findOne({"email":req.body.email,"OTP":req.body.otp},function(err,docs){
 		if(err || (docs==null)){
 			res.sendStatus(500)
 		}
@@ -155,6 +197,5 @@ router.post('/forgot', function(req,res){
 		}
 	})
 })
-
 
 module.exports = router;
