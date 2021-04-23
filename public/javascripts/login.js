@@ -3,6 +3,7 @@ app.controller('logincontroller', function($scope,$http,$window){
 
 	$scope.user = {}
 	$scope.postdata = function(v){
+		// alert(v.email + "  " + v.password)
 		if((v.email != undefined)&&(v.password != undefined)){
 			$http({
 				method:'post',

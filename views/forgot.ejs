@@ -37,6 +37,27 @@
               <button type="button" class="btn btn-info" ng-click="sendotp(user)">submit</button>
               <button type="button" class="btn btn-warning" ng-click="postdata(user)">Resend OTP</button>
             </div>
+            <br>
+            <br>
+            <div class="col-md-12" ng-show="Password">
+              <label class="col-md-2" style="font-size: 13px;color:orange">New Password:</label>
+              <div class="col-md-8">
+                <input type="password" class="form-control" ng-model="user.newpassword">
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="col-md-12" ng-show="Password">
+              <label class="col-md-2" style="font-size: 13px;color:orange">Conform Password:</label>
+              <div class="col-md-8">
+                <input type="password" class="form-control" ng-model="user.cpassword">
+              </div>
+            </div>
+            <br>
+            <br>
+            <div ng-show="Password" class="col-md-12" style="text-align: center;">
+              <button type="button" class="btn btn-info" ng-click="sendpassword(user)">submit</button>
+            </div>
           </form>      
         </div>  
       </div>

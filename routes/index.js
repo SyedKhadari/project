@@ -1,12 +1,26 @@
 var express = require('express');
 var router = express.Router();
 var monk = require('monk');
-var db = monk('localhost:27017/Project');
+var db = monk('localhost:27017/TestTask');
 var collection = db.get("usersdata");
 var collection2 = db.get("usertasks")
+var collection3 = db.get("userpic")
+var login = db.get("login");
 var moment = require('moment')
 var randomstring = require("randomstring");
 var nodemailer = require('nodemailer');
+var multer  = require('multer')
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+ 
+var upload = multer({ storage: storage })
+
 
 var CronJob = require('cron').CronJob;
 
@@ -16,8 +30,8 @@ var job = new CronJob('05 06 12 * * *', function() {
 
 job.start();
 /* GET home page. */
-router.get('/dattaas', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/', function(req, res, next) {
+  res.render('login');
 });
 
 router.post('/postingdata', function(req,res){
@@ -61,17 +75,17 @@ router.get('/gettingusersdata', function(req,res){
 })
 
 router.get("/login", function(req,res){
-	res.render('login')
+	res.render('login2')
 })
 
 
 router.post('/login', function(req,res){
-	collection.findOne({"email":req.body.email,"password":req.body.password}, function(err,docs){
+	login.findOne({"username":req.body.email,"password":req.body.password}, function(err,docs){
 		if(err || (docs==null)){
 			res.sendStatus(500)
 		}
 		else{
-			req.session.user = docs
+			// req.session.user = docs
 			res.sendStatus(200)
 		}
 	})
@@ -79,14 +93,14 @@ router.post('/login', function(req,res){
 
 
 router.get('/home', function(req,res){
-  if(req.session && req.session.user){
-  	// console.log(req.session.user)
-  	res.render('home', {user:req.session.user})
-  }
-  else{
-  	req.session.reset()
-  	res.redirect('/login')
-  }	
+  res.render('home')
+  // if(req.session && req.session.user){
+  // 	// console.log(req.session.user)
+  // }
+  // else{
+  // 	req.session.reset()
+  // 	res.redirect('/login')
+  // }	
 })
 
 router.get('/logout', function(req,res){
@@ -197,5 +211,48 @@ router.post('/checkotp', function(req,res){
 		}
 	})
 })
+
+
+router.post('/changepassword', function(req,res){
+	// console.log(req.body)
+	collection.update({"email":req.body.email,"OTP":req.body.otp},{$set:{"password":req.body.newpassword}}, function(err,docs){
+		console.log(docs)
+		if(docs.nModified == 1){
+			res.sendStatus(200)
+		}
+		else{
+			res.sendStatus(500)
+		}
+	})
+})
+
+
+// router.get('/', function(req,res){
+// 	collection3.find({},function(err,docs){
+// 		if(err){
+// 			console.log(err)
+// 		}
+// 		else{
+// 			// console.log(docs)
+// 			res.render('fileupload', {data:docs})
+// 		}
+// 	})
+// })
+
+router.post('/postfile',upload.single('file'), function(req,res){
+	console.log(req.file)
+	console.log(req.body)
+	collection3.insert({"email":req.body.email,"myfile":req.file.originalname}, function(err,docs){
+		if(err){
+			res.sendStatus(500)
+		}
+		else{
+			console.log(docs)
+			res.redirect('/')
+		}
+	})
+
+})
+
 
 module.exports = router;

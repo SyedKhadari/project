@@ -4,11 +4,14 @@
     <title>home</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://unpkg.com/jspdf@latest/dist/jspdf.umd.min.js"></script>
   </head>
   <body ng-app="mytest" ng-controller="homecontroller" ng-init="getdata()">
-	<h1>Welcome Home <%=user.username%> </h1>  
+	<h1>Welcome Home </h1>  
 	<button class="btn btn-danger"><a href="/logout" style="color:white">Logout</a></button>
+	<button class="btn btn-primary" onclick="testpdf()">PDF</button>
 	<br>
 	<br>
 	<form class="row col-md-6">
@@ -44,4 +47,13 @@
 	</table>
   </body>
   <script src="javascripts/home2.js"></script>
+  
+  <script type="text/javascript">
+  	function testpdf(){
+  		var doc = new jsPDF();
+
+		doc.text("Hello world!", 10, 10);
+		doc.save("a4.pdf");
+	}
+  </script>
 </html>
